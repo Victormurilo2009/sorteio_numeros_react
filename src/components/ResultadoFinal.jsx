@@ -1,16 +1,37 @@
-export default function ResultadoFinal({ pontuacaoTotal, pontuacaoMaxima, mensagemFinal, aoReiniciar }) {
+import React from 'react';
+import { Pressable, Text, View } from 'react-native';
+import styles from '../styles';
+
+export default function ResultadoFinal({
+  pontuacaoTotal,
+  pontuacaoMaxima,
+  mensagemFinal,
+  aoReiniciar,
+}) {
   return (
-    <section className="resultado-final" aria-live="polite">
-      <p className="sobretitulo">Partida concluída</p>
-      <h2>Fim de jogo!</h2>
-      <p className="pontuacao-final">
-        Pontuação final:
-        <strong>{pontuacaoTotal} / {pontuacaoMaxima}</strong>
-      </p>
-      <p className="mensagem-final">{mensagemFinal}</p>
-      <button id="botao-reiniciar" type="button" onClick={aoReiniciar}>
-        Jogar Novamente
-      </button>
-    </section>
-  )
+    <View style={styles.resultadoFinal} accessibilityLiveRegion="polite">
+      <Text style={styles.sobretituloFinal}>PARTIDA CONCLUÍDA</Text>
+      <Text style={styles.tituloFinal}>Fim de jogo!</Text>
+
+      <Text style={styles.pontuacaoFinalRotulo}>Pontuação final:</Text>
+      <Text style={styles.pontuacaoFinalValor}>
+        {pontuacaoTotal} / {pontuacaoMaxima}
+      </Text>
+
+      <Text style={styles.mensagemFinal}>{mensagemFinal}</Text>
+
+      <Pressable
+        onPress={aoReiniciar}
+        accessibilityRole="button"
+        accessibilityLabel="Jogar novamente"
+        style={({ pressed }) => [
+          styles.botao,
+          styles.botaoReiniciar,
+          pressed && styles.botaoPressionado,
+        ]}
+      >
+        <Text style={styles.botaoTexto}>Jogar Novamente</Text>
+      </Pressable>
+    </View>
+  );
 }

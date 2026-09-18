@@ -1,18 +1,33 @@
-export default function Placar({ pontosRodada, pontuacaoTotal, pontuacaoMaxima }) {
-  return (
-    <section className="placar" aria-label="Placar da partida">
-      <article className="ponto-card">
-        <span>Pontos da rodada</span>
-        <strong>{pontosRodada ?? '--'}</strong>
-      </article>
+import React from 'react';
+import { Text, View } from 'react-native';
+import styles from '../styles';
 
-      <article className="ponto-card ponto-total">
-        <span>Pontuação total</span>
-        <strong>
+export default function Placar({
+  pontosRodada,
+  pontuacaoTotal,
+  pontuacaoMaxima,
+  compacto,
+}) {
+  return (
+    <View style={[styles.placar, compacto && styles.placarCompacto]}>
+      <View style={[styles.pontoCard, compacto && styles.pontoCardCompacto]}>
+        <Text style={styles.pontoRotulo}>PONTOS DA RODADA</Text>
+        <Text style={styles.pontoValor}>{pontosRodada ?? '--'}</Text>
+      </View>
+
+      <View
+        style={[
+          styles.pontoCard,
+          styles.pontoTotal,
+          compacto && styles.pontoCardCompacto,
+        ]}
+      >
+        <Text style={styles.pontoRotulo}>PONTUAÇÃO TOTAL</Text>
+        <Text style={styles.pontoValor}>
           {pontuacaoTotal}
-          <small>/ {pontuacaoMaxima}</small>
-        </strong>
-      </article>
-    </section>
-  )
+          <Text style={styles.pontoMaximo}> / {pontuacaoMaxima}</Text>
+        </Text>
+      </View>
+    </View>
+  );
 }
