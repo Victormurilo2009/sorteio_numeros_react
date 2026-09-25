@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from '../styles';
 
 function FormularioJogo({
@@ -11,6 +11,8 @@ function FormularioJogo({
   desabilitado,
   compacto,
 }) {
+  const [pressionado, setPressionado] = React.useState(false);
+
   function tratarTexto(texto) {
     const somenteNumeros = texto.replace(/[^0-9]/g, '').slice(0, 2);
     aoAlterarNumero(somenteNumeros);
@@ -36,20 +38,23 @@ function FormularioJogo({
           accessibilityLabel="Número escolhido"
         />
 
-        <Pressable
+        <TouchableOpacity
           onPress={aoSortear}
+          onPressIn={() => setPressionado(true)}
+          onPressOut={() => setPressionado(false)}
           disabled={desabilitado}
           accessibilityRole="button"
           accessibilityLabel="Sortear número"
-          style={({ pressed }) => [
+          activeOpacity={0.85}
+          style={[
             styles.botao,
             compacto && styles.botaoCompacto,
-            pressed && !desabilitado && styles.botaoPressionado,
+            pressionado && !desabilitado && styles.botaoPressionado,
             desabilitado && styles.botaoDesabilitado,
           ]}
         >
           <Text style={styles.botaoTexto}>Sortear Número</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       <Text style={styles.mensagemErro}>{mensagemValidacao}</Text>

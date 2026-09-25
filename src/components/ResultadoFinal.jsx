@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import styles from '../styles';
 
 export default function ResultadoFinal({
@@ -8,6 +8,8 @@ export default function ResultadoFinal({
   mensagemFinal,
   aoReiniciar,
 }) {
+  const [pressionado, setPressionado] = React.useState(false);
+
   return (
     <View style={styles.resultadoFinal} accessibilityLiveRegion="polite">
       <Text style={styles.sobretituloFinal}>PARTIDA CONCLUÍDA</Text>
@@ -20,18 +22,21 @@ export default function ResultadoFinal({
 
       <Text style={styles.mensagemFinal}>{mensagemFinal}</Text>
 
-      <Pressable
+      <TouchableOpacity
         onPress={aoReiniciar}
+        onPressIn={() => setPressionado(true)}
+        onPressOut={() => setPressionado(false)}
         accessibilityRole="button"
         accessibilityLabel="Jogar novamente"
-        style={({ pressed }) => [
+        activeOpacity={0.85}
+        style={[
           styles.botao,
           styles.botaoReiniciar,
-          pressed && styles.botaoPressionado,
+          pressionado && styles.botaoPressionado,
         ]}
       >
         <Text style={styles.botaoTexto}>Jogar Novamente</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }
